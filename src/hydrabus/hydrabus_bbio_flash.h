@@ -18,6 +18,10 @@
 
 #define BBIO_FLASH_HEADER	"FLA1"
 
+/* BUG: tx_data and rx_data buffers should be allocated dynamicaly depending on NAND page size.
+setting them to 8192 limits will prevent read/write page to chips with page size greater than this value. */
+#define BBIO_FLASH_TXRX_BUF_SIZE 8192
+
 void bbio_mode_flash(t_hydra_console *con);
 void flash_chip_en_high(void);
 void flash_chip_en_low(void);

@@ -39,8 +39,8 @@ void bbio_mode_flash(t_hydra_console *con)
 	FIL outfile;
 	uint32_t to_rx, to_tx, i;
 	uint8_t bbio_subcommand;
-	uint8_t *tx_data = pool_alloc_bytes(0x1000); // 4096 bytes
-	uint8_t *rx_data = pool_alloc_bytes(0x1000); // 4096 bytes
+	uint8_t *tx_data = pool_alloc_bytes(BBIO_FLASH_TXRX_BUF_SIZE);
+	uint8_t *rx_data = pool_alloc_bytes(BBIO_FLASH_TXRX_BUF_SIZE);
 	bool to_sd = FALSE;
 
 	if(tx_data == 0 || rx_data == 0) {
@@ -90,7 +90,7 @@ void bbio_mode_flash(t_hydra_console *con)
 				chnRead(con->sdu, rx_data, 4);
 				to_tx = (rx_data[0] << 8) + rx_data[1];
 				to_rx = (rx_data[2] << 8) + rx_data[3];
-				if ((to_tx > 4096) || (to_rx > 4096)) {
+				if ((to_tx > BBIO_FLASH_TXRX_BUF_SIZE) || (to_rx > BBIO_FLASH_TXRX_BUF_SIZE)) {
 					cprint(con, "\x00", 1);
 					break;
 				}
